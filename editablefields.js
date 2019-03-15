@@ -8,7 +8,7 @@ Drupal.behaviors.editablefields_submit = {
       // button.
       var $singleEditableFields = $this.find('input[type=text],input[type=checkbox],textarea,select');
       // Filter out select's from table drag.
-      $singleEditableFields = $singleEditableFields.not('[name*="_weight"]');
+      $singleEditableFields = $singleEditableFields.not('[name*="[_weight]"]');
       if ($singleEditableFields.length === 1 || $this.find('input[type=radio]').length > 1) {
         $this.find('.form-submit').hide();
         $this.find('input[type=text],input[type=checkbox],input[type=radio],textarea,select').change(function () {
