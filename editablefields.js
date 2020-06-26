@@ -1,5 +1,5 @@
 (function ($) {
-Drupal.behaviors.editablefields_submit = {
+Backdrop.behaviors.editablefields_submit = {
   attach: function (context) {
     $('.editablefield-item', context).once('editablefield', function() {
       var $this = $(this);
@@ -35,10 +35,10 @@ Drupal.behaviors.editablefields_submit = {
 };
 
 /**
- * Overridden from Drupal core autocomplete.js
+ * Overridden from Backdrop core autocomplete.js
  * Hides the autocomplete suggestions.
  */
-Drupal.jsAC.prototype.hidePopup = function (keycode) {
+Backdrop.jsAC.prototype.hidePopup = function (keycode) {
   // Select item if the right key or mousebutton was pressed.
   if (this.selected && ((keycode && keycode !== 46 && keycode !== 8 && keycode !== 27) || !keycode)) {
     this.input.value = $(this.selected).data('autocompleteValue');

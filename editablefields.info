@@ -1,6 +1,7 @@
 name = Editable Fields
 description = "Allows you to make some fields editable from the display."
 package = Fields
-core = 7.x
+backdrop = 1.x
+type = module
 
-dependencies[] = entity
+dependencies[] = entity_plus
