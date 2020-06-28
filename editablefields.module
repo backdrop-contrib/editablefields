@@ -27,9 +27,9 @@ function editablefields_field_formatter_info()
 }
 
 /**
- * Implements hook_library().
+ * Implements hook_library_info().
  */
-function editablefields_library()
+function editablefields_library_info()
 {
     $path = backdrop_get_path('module', 'editablefields');
     $libraries['editablefields'] = array(
