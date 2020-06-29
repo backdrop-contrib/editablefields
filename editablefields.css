@@ -1,8 +1,22 @@
 .editablefield-item {
   position: relative;
 }
-.editablefield-hover-link {
+.editablefield-hover-link.button{
   font-size: x-small;
   position: absolute;
   z-index: 200;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0.3em;
+  line-height: normal;
+}
+
+
+.editablefield-edit {
+  font-size: x-small;
+}
+
+.editablefield-item-border {
+  outline: 1px dashed #cccccc;
 }

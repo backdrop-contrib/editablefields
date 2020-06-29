@@ -20,16 +20,23 @@ Backdrop.behaviors.editablefields_submit = {
       var linkName = '.editablefield-hover-link';
 
       var $submit = $this.find(submitName);
-      $submit.hide().after('<a href="#" class="editablefield-hover-link">' + $submit.attr('value') + '</a>');
+      $submit.hide().after('<a href="#" class="editablefield-hover-link button">' + $submit.attr('value') + '</a>');
 
       $this.find(linkName).hide().click(function () {
         $this.find(submitName).click();
         return false;
       });
 
-      $this.hover(function () {
+      $this.hover(
+        function () {
+        $this.addClass('editablefield-item-border');
         $this.find(linkName).fadeToggle('fast');
-      });
+      },
+        function () {
+          $this.removeClass('editablefield-item-border');
+          $this.find(linkName).fadeToggle('fast');
+        }
+      );
     });
   }
 };
