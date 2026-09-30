@@ -427,6 +427,10 @@ function editablefields_form($form, &$form_state, $entity_type, $entity, $field,
  */
 class EditableFieldsShield
 {
+    /**
+     * @var array
+     */
+    public $arguments;
     public function __sleep()
     {
         return array();
