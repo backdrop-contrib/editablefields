@@ -381,13 +381,21 @@ function editablefields_form($form, &$form_state, $entity_type, $entity, $field,
 
         $form['actions'] = array('#type' => 'actions');
         $form['actions']['submit'] = array(
-      '#name' => 'submit-' . implode('-', $form['#parents']),
-      '#type' => 'submit',
-      '#value' => t('Save'),
-      '#ajax' => $ajax,
-      '#submit' => array('editablefields_form_submit'),
-      '#limit_validation_errors' => array($form['#parents']),
-    );
+          '#name' => 'submit-' . implode('-', $form['#parents']),
+          '#type' => 'submit',
+          '#value' => t('Save'),
+          '#ajax' => $ajax,
+          '#submit' => array('editablefields_form_submit'),
+          '#limit_validation_errors' => array($form['#parents']),
+        );
+        $form['actions']['cancel'] = array(
+          '#name' => 'cancel-' . implode('-', $form['#parents']),
+          '#type' => 'submit',
+          '#value' => t('Cancel'),
+          '#ajax' => $ajax,
+          '#submit' => array('editablefields_form_cancel'),
+          '#limit_validation_errors' => array($form['#parents']),
+        );
     } else {
         $edit_style = isset($display['settings']['click_to_edit_style']) ? $display['settings']['click_to_edit_style'] : 'button';
         $items = $entity->{$field['field_name']};
@@ -573,6 +581,37 @@ function editablefields_form_submit(&$form, &$form_state)
     }
     entity_form_submit_build_entity($entity_type, $entity, $element, $form_state);
     entity_plus_save($entity_type, $entity);
+
+    $form_state['rebuild'] = true;
+    // Put back the updated entity for used during form rebuild.
+    $form_state['editablefields_entities'][$entity_type][$entity_id] = $entity;
+}
+
+/**
+ * Form submit callback: cancel the field modifications.
+ */
+function editablefields_form_cancel(&$form, &$form_state)
+{
+    // Return the proper part of the form.
+    $parents = $form_state['triggering_element']['#array_parents'];
+    // Remove the 'actions' and 'link' elements.
+    array_pop($parents);
+    array_pop($parents);
+
+    $element = &$form;
+    foreach ($parents as $parent) {
+      $element = &$element[$parent];
+    }
+    _editablefields_set_edit_mode($form_state, false, $parents);
+    // Re-load the entity.
+    $entity_type = $element['#entity_type'];
+    $entity_id = $element['#entity_id'];
+    $entity = entity_load($entity_type, $entity_id);
+
+    // Populate default node settings, e.g. revision.
+    if ($entity_type == 'node') {
+      node_object_prepare($entity);
+    }
 
     $form_state['rebuild'] = true;
     // Put back the updated entity for used during form rebuild.
